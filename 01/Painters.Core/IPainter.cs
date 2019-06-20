@@ -4,7 +4,7 @@ namespace Painters.Core
 {
     public interface IPainter
     {
-        bool IsAvailable { get; }
+        PainterStatus Status { get; }
         TimeSpan TimeBySqMeters { get; }
         double PriceByHour { get; }
         TimeSpan EstimateTimeToPaint(double sqMeters);

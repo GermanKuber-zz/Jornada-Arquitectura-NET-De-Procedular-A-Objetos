@@ -13,7 +13,7 @@ namespace Painters.Core
             IPainter cheapest = null;
             foreach (var painter in painters)
             {
-                if (painter.IsAvailable)
+                if (painter.Status == PainterStatus.Available)
                 {
                     double price = painter.EstimatePrice(sqMeters);
                     if (cheapest == null || price < bestPrice)
@@ -32,7 +32,7 @@ namespace Painters.Core
             IPainter faster = null;
             foreach (var painter in painters)
             {
-                if (painter.IsAvailable)
+                if (painter.Status == PainterStatus.Available)
                 {
                     TimeSpan time = painter.EstimateTimeToPaint(sqMeters);
                     if (faster == null || time < lessTime)
@@ -51,19 +51,19 @@ namespace Painters.Core
                 TimeSpan.FromHours(
                     1 /
                     painters
-                        .Where(painter => painter.IsAvailable)
+                        .Where(painter => painter.Status == PainterStatus.Available)
                         .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
                         .Sum());
 
             double cost =
                 painters
-                    .Where(painter => painter.IsAvailable)
+                    .Where(painter => painter.Status == PainterStatus.Available)
                     .Select(painter =>
                         painter.EstimatePrice(sqMeters) /
                         painter.EstimateTimeToPaint(sqMeters).TotalHours * time.TotalHours)
                     .Sum();
 
-            return new ProportionalPainter(true, TimeSpan.FromHours(time.TotalHours / sqMeters),
+            return new ProportionalPainter(PainterStatus.Available, TimeSpan.FromHours(time.TotalHours / sqMeters),
                 cost / time.TotalHours);
         }
     }
