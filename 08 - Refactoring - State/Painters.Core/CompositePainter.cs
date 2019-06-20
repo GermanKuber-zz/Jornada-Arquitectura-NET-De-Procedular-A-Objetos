@@ -1,58 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Painters.Core.Status;
 
 namespace Painters.Core
 {
-
-    public interface IOrganizePainters
-    {
-        IPainter Organize(double sqMeters, IEnumerable<IPainter> painters);
-    }
-
-    public class ProportionalOrganizePainters : IOrganizePainters
-    {
-        public IPainter Organize(double sqMeters, IEnumerable<IPainter> painters)
-        {
-            TimeSpan time =
-             TimeSpan.FromHours(
-                 1 /
-                 painters
-                     .Where(painter => painter.Status == PainterStatus.Available)
-                     .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
-                     .Sum());
-
-            double cost =
-                painters
-                    .Where(painter => painter.Status == PainterStatus.Available)
-                    .Select(painter =>
-                        painter.EstimatePrice(sqMeters) /
-                        painter.EstimateTimeToPaint(sqMeters).TotalHours * time.TotalHours)
-                    .Sum();
-
-            return new ProportionalPainter(PainterStatus.Available, TimeSpan.FromHours(time.TotalHours / sqMeters),
-                cost / time.TotalHours);
-        }
-    }
     public class CompositePainter : IPainter
     {
         private IEnumerable<IPainter> Painters { get; }
 
-        public PainterStatus Status
+        public IPainterStatus Status
         {
             get
             {
-                if (Painters.Any(painter => painter.Status == PainterStatus.Available))
-                    return PainterStatus.Available;
+                if (Painters.Any(painter => painter.Status.Status == PainterStatus.Available))
+                    return new AvailablePainterStatus(TimeBySqMeters, PriceByHour);
                 else
-                    return PainterStatus.Unavailable;
+                    return new UnavailablePainterStatus(TimeBySqMeters, PriceByHour);
+
             }
         }
         public TimeSpan TimeBySqMeters =>
-            new TimeSpan(Convert.ToInt64(Painters.Average(painter => painter.TimeBySqMeters.Ticks)));
+            new TimeSpan(Convert.ToInt64(Painters.Average(painter => painter.Status.TimeBySqMeters.Ticks)));
 
         public double PriceByHour =>
-            Painters.Average(painter => painter.PriceByHour);
+            Painters.Average(painter => painter.Status.PriceByHour);
+
 
         private readonly IOrganizePainters _organizePainters;
 

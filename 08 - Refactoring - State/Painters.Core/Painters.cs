@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Painters.Core.Status;
 
 namespace Painters.Core
 {
@@ -17,7 +18,7 @@ namespace Painters.Core
         }
 
         public Painters GetAvailable() =>
-            new Painters(this.ContainedPainters.Where(painter => painter.Status == PainterStatus.Available));
+            new Painters(this.ContainedPainters.Where(painter => painter.Status.Status == PainterStatus.Available));
 
         public IPainter GetCheapestOne(double sqMeters) =>
             this.ContainedPainters.WithMinimum(painter => painter.EstimatePrice(sqMeters));

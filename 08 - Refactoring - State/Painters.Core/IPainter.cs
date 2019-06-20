@@ -1,12 +1,11 @@
 ﻿using System;
+using Painters.Core.Status;
 
 namespace Painters.Core
 {
     public interface IPainter
     {
-        PainterStatus Status { get; }
-        TimeSpan TimeBySqMeters { get; }
-        double PriceByHour { get; }
+        IPainterStatus Status { get; }
         TimeSpan EstimateTimeToPaint(double sqMeters);
         double EstimatePrice(double sqMeters);
     }

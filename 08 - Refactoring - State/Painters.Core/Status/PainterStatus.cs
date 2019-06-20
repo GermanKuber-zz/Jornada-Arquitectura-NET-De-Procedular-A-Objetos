@@ -1,4 +1,4 @@
-﻿namespace Painters.Core
+﻿namespace Painters.Core.Status
 {
     public enum PainterStatus
     {
