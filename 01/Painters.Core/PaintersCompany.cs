@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Painters.Core
@@ -22,6 +23,25 @@ namespace Painters.Core
                 }
             }
             return cheapest;
+        }
+
+        public IPainter FindFasterPainter(double sqMeters, IEnumerable<IPainter> painters)
+        {
+            TimeSpan lessTime = default;
+            IPainter faster = null;
+            foreach (var painter in painters)
+            {
+                if (painter.IsAvailable)
+                {
+                    TimeSpan time = painter.EstimateTimeToPaint(sqMeters);
+                    if (faster == null || time < lessTime)
+                    {
+                        faster = painter;
+                        lessTime = time;
+                    }
+                }
+            }
+            return faster;
         }
     }
 }

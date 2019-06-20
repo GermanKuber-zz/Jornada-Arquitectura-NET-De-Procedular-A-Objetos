@@ -27,5 +27,13 @@ namespace Painters.Core.Tests
             _listOfPainters.Add(cheapest);
             _sut.FindCheapestPainter(30, _listOfPainters).Should().Be(cheapest);
         }
+
+        [Fact]
+        public void Return_Faster_Painter()
+        {
+            var faster = new Painter(true, new TimeSpan(0, 0, 39, 0, 0), 11);
+            _listOfPainters.Add(faster);
+            _sut.FindFasterPainter(30, _listOfPainters).Should().Be(faster);
+        }
     }
 }
