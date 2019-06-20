@@ -7,11 +7,17 @@ namespace Painters.Core
 {
     public class PaintersCompany
     {
-        public IPainter FindCheapestPainter(double sqMeters, IEnumerable<IPainter> painters)
+        private readonly IEnumerable<IPainter> _painters;
+
+        public PaintersCompany(IEnumerable<IPainter> painters)
+        {
+            _painters = painters;
+        }
+        public IPainter FindCheapestPainter(double sqMeters )
         {
             double bestPrice = 0;
             IPainter cheapest = null;
-            foreach (var painter in painters)
+            foreach (var painter in _painters)
             {
                 if (painter.Status == PainterStatus.Available)
                 {
@@ -26,11 +32,11 @@ namespace Painters.Core
             return cheapest;
         }
 
-        public IPainter FindFasterPainter(double sqMeters, IEnumerable<IPainter> painters)
+        public IPainter FindFasterPainter(double sqMeters)
         {
             TimeSpan lessTime = default;
             IPainter faster = null;
-            foreach (var painter in painters)
+            foreach (var painter in _painters)
             {
                 if (painter.Status == PainterStatus.Available)
                 {
@@ -45,18 +51,18 @@ namespace Painters.Core
             return faster;
         }
 
-        public IPainter WorkTogether(double sqMeters, List<IPainter> painters)
+        public IPainter WorkTogether(double sqMeters)
         {
             TimeSpan time =
                 TimeSpan.FromHours(
                     1 /
-                    painters
+                    _painters
                         .Where(painter => painter.Status == PainterStatus.Available)
                         .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
                         .Sum());
 
             double cost =
-                painters
+                _painters
                     .Where(painter => painter.Status == PainterStatus.Available)
                     .Select(painter =>
                         painter.EstimatePrice(sqMeters) /

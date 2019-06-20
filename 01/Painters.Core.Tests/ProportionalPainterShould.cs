@@ -18,8 +18,15 @@ namespace Painters.Core.Tests
         [Fact]
         public void Return_Price_In_Holidays()
         {
-            _sut= new ProportionalPainter(PainterStatus.InHolidays, new TimeSpan(0,0,30,0), 10, 20);
+            _sut = new ProportionalPainter(PainterStatus.InHolidays, new TimeSpan(0, 0, 30, 0), 10, 20);
             _sut.EstimatePrice(10).Should().Be(100);
+        }
+
+        [Fact]
+        public void Return_Price_Zero_Unavailable()
+        {
+            _sut = new ProportionalPainter(PainterStatus.Unavailable, new TimeSpan(0, 0, 30, 0), 10, 20);
+            _sut.EstimatePrice(10).Should().Be(0);
         }
         [Fact]
         public void Return_Time_Zero_Unavailable()
