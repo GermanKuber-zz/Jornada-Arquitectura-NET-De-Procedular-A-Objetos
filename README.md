@@ -1,10 +1,11 @@
 # Jornada Arquitectura .NET - De Procedular A Objetos
 
+[![N|Net-Baires](http://www.germankuber.com.ar/wp-content/uploads/evento-net-meetup.png)](https://www.meetup.com/es-ES/Net-Baires/events/262022769/)
+
 ## Painters Company
 
-[![N|Net-Baires](http://www.germankuber.com.ar/wp-content/uploads/Blanco-small.png)](https://www.net-baires.com.ar/)
 
-# Requerimientos
+## Requerimientos
 
 ### [01 - Cheapest Painter](https://github.com/GermanKuber/Jornada-Arquitectura-NET-De-Procedular-A-Objetos/tree/master/01%20-%20Cheapest%20Painter)
 
