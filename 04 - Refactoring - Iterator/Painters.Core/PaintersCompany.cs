@@ -13,24 +13,12 @@ namespace Painters.Core
         {
             _painters = painters;
         }
-        public IPainter FindCheapestPainter(double sqMeters )
-        {
-            double bestPrice = 0;
-            IPainter cheapest = null;
-            foreach (var painter in _painters)
-            {
-                if (painter.Status == PainterStatus.Available)
-                {
-                    double price = painter.EstimatePrice(sqMeters);
-                    if (cheapest == null || price < bestPrice)
-                    {
-                        cheapest = painter;
-                        bestPrice = price;
-                    }
-                }
-            }
-            return cheapest;
-        }
+
+        //TODO: 02 - Remplazo el foreach con el método de extensión
+        public IPainter FindCheapestPainter(double sqMeters) =>
+            _painters
+                .Where(painter => painter.Status == PainterStatus.Available)
+                .WithMinimum(painter => painter.EstimatePrice(sqMeters));
 
         public IPainter FindFasterPainter(double sqMeters)
         {
