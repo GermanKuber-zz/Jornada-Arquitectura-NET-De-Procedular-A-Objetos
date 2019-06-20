@@ -1,0 +1,24 @@
+﻿using System;
+using FluentAssertions;
+using Xunit;
+
+namespace Painters.Core.Tests
+{
+    public class ProportionalPainterShould
+    {
+        private ProportionalPainter _sut;
+        
+        [Fact]
+        public void Return_Price_Zero_Unavailable()
+        {
+            _sut = new ProportionalPainter(PainterStatus.Unavailable, new TimeSpan(0, 0, 30, 0), 10);
+            _sut.EstimatePrice(10).Should().Be(0);
+        }
+        [Fact]
+        public void Return_Time_Zero_Unavailable()
+        {
+            _sut = new ProportionalPainter(PainterStatus.Unavailable, new TimeSpan(0, 0, 30, 0), 10);
+            _sut.EstimateTimeToPaint(300).Should().Be(TimeSpan.Zero);
+        }
+    }
+}
