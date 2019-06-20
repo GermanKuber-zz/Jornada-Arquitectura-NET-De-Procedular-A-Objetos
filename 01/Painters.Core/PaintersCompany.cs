@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Painters.Core
 {
@@ -42,6 +43,28 @@ namespace Painters.Core
                 }
             }
             return faster;
+        }
+
+        public IPainter WorkTogether(double sqMeters, List<IPainter> painters)
+        {
+            TimeSpan time =
+                TimeSpan.FromHours(
+                    1 /
+                    painters
+                        .Where(painter => painter.IsAvailable)
+                        .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
+                        .Sum());
+
+            double cost =
+                painters
+                    .Where(painter => painter.IsAvailable)
+                    .Select(painter =>
+                        painter.EstimatePrice(sqMeters) /
+                        painter.EstimateTimeToPaint(sqMeters).TotalHours * time.TotalHours)
+                    .Sum();
+
+            return new ProportionalPainter(true, TimeSpan.FromHours(time.TotalHours / sqMeters),
+                cost / time.TotalHours);
         }
     }
 }
