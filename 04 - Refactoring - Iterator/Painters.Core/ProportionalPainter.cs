@@ -11,7 +11,10 @@ namespace Painters.Core
 
 
 
-        public ProportionalPainter(PainterStatus status, TimeSpan timeBySqMeters, double priceByHour, double? priceByHourInHolidays = null)
+        public ProportionalPainter(PainterStatus status, 
+                                   TimeSpan timeBySqMeters, 
+                                   double priceByHour, 
+                                   double? priceByHourInHolidays = null)
         {
             if (status == PainterStatus.InHolidays && priceByHourInHolidays == null)
                 throw new ArgumentNullException(nameof(priceByHourInHolidays));
