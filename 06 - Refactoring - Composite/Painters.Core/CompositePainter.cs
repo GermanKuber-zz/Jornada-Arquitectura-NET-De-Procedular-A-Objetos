@@ -4,36 +4,6 @@ using System.Linq;
 
 namespace Painters.Core
 {
-    interface IOrganizePainters
-    {
-        IPainter Organize(double sqMeters, IEnumerable<IPainter> painters);
-    }
-
-    class ProportionalPaintersOrganize : IOrganizePainters
-    {
-        public IPainter Organize(double sqMeters, IEnumerable<IPainter> painters)
-        {
-            TimeSpan time =
-                TimeSpan.FromHours(
-                    1 /
-                    Painters
-                        .Where(painter => painter.Status == PainterStatus.Available)
-                        .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
-                        .Sum());
-
-            double cost =
-                Painters
-                    .Where(painter => painter.Status == PainterStatus.Available)
-                    .Select(painter =>
-                        painter.EstimatePrice(sqMeters) /
-                        painter.EstimateTimeToPaint(sqMeters).TotalHours * time.TotalHours)
-                    .Sum();
-
-            return new ProportionalPainter(PainterStatus.Available, TimeSpan.FromHours(time.TotalHours / sqMeters),
-                cost / time.TotalHours);
-        }
-    }
-
     public class CompositePainter : IPainter
     {
         private IEnumerable<IPainter> Painters { get; }
@@ -53,14 +23,31 @@ namespace Painters.Core
         public double PriceByHour => Painters.Average(painter => painter.PriceByHour);
 
 
-        public CompositePainter(Painters painters, IOrganizePainters organizePainters)
+        public CompositePainter(Painters painters)
         {
             this.Painters = painters.ContainedPainters.ToList();
 
         }
         private IPainter Reduce(double sqMeters)
         {
-          
+            TimeSpan time =
+               TimeSpan.FromHours(
+                   1 /
+                   Painters
+                       .Where(painter => painter.Status == PainterStatus.Available)
+                       .Select(painter => 1 / painter.EstimateTimeToPaint(sqMeters).TotalHours)
+                       .Sum());
+
+            double cost =
+                Painters
+                    .Where(painter => painter.Status == PainterStatus.Available)
+                    .Select(painter =>
+                        painter.EstimatePrice(sqMeters) /
+                        painter.EstimateTimeToPaint(sqMeters).TotalHours * time.TotalHours)
+                    .Sum();
+
+            return new ProportionalPainter(PainterStatus.Available, TimeSpan.FromHours(time.TotalHours / sqMeters),
+                cost / time.TotalHours);
         }
 
 

@@ -9,8 +9,6 @@ namespace Painters.Core
         public double PriceByHour { get; }
         public PainterStatus Status { get; private set; }
 
-
-
         public ProportionalPainter(PainterStatus status, TimeSpan timeBySqMeters, double priceByHour, double? priceByHourInHolidays = null)
         {
             if (status == PainterStatus.InHolidays && priceByHourInHolidays == null)

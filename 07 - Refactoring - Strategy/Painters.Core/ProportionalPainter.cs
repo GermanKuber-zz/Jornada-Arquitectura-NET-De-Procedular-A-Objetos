@@ -2,11 +2,7 @@
 
 namespace Painters.Core
 {
-    public interface PainterStatus {
-        TimeSpan EstimateTimeToPaint(double sqMeters);
-        double EstimatePrice(double sqMeters);
-    }
-    public class UnavailablePainterStatus : PainterStatus { }
+ 
     public class ProportionalPainter : IPainter
     {
         private readonly double _priceByHourInHolidays;
