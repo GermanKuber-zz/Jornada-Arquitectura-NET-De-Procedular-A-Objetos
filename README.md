@@ -1,6 +1,6 @@
 # Jornada Arquitectura .NET - De Procedular A Objetos
 
-[![N|Net-Baires](http://www.germankuber.com.ar/wp-content/uploads/evento-net-meetup.png)](https://www.meetup.com/es-ES/Net-Baires/events/262022769/)
+[![N|Net-Baires](http://www.germankuber.com.ar/wp-content/uploads/2019/06/image-1.png)](https://www.meetup.com/es-ES/Net-Baires/events/262022769/)
 
 ## Painters Company
 
@@ -11,7 +11,7 @@
 ### [01 - Cheapest Painter](https://github.com/GermanKuber/Jornada-Arquitectura-NET-De-Procedular-A-Objetos/tree/master/01%20-%20Cheapest%20Painter)
 
   - Dadas las dimensiones en metros de una superficie, se debe obtener el pintor mas barato para pintarla.
-  - Solo serán considerados los pintos que se encuentren disponible en ese momento para realizar el trabajo.
+  - Solo serán considerados los pintores que se encuentren disponible en ese momento para realizar el trabajo.
 
 ### [02 - Fastest Painter](https://github.com/GermanKuber/Jornada-Arquitectura-NET-De-Procedular-A-Objetos/tree/master/02%20-%20Fastest%20Painter)
 
